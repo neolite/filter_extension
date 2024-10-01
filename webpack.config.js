@@ -28,7 +28,8 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './public/popup.html',
       filename: 'popup.html',
-      chunks: ['popup']
+      chunks: ['popup'],
+      hash: true
     }),
     new CopyPlugin({
       patterns: [

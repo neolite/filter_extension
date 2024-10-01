@@ -3,7 +3,7 @@
   "name": "Filter URL Extension",
   "version": "1.0",
   "description": "Fetch and analyze filter URLs",
-  "permissions": ["storage"],
+  "permissions": ["storage", "https://*/"],
   "browser_action": {
     "default_popup": "popup.html"
   },
