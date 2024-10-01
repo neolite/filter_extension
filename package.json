@@ -1,37 +1,46 @@
 {
-	"name": "filter-url-extension",
-	"version": "0.1.0",
-	"description": "Filter URL extension",
-	"private": true,
-	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
-		"build": "webpack --mode production",
-		"dev": "webpack --mode development --watch",
-		"lint": "npm run lint:biome && npm run lint:ts",
-		"lint:ts": "tsc --noEmit -p tsconfig.json",
-		"lint:biome": "biome check ./src",
-		"lint:fix": "biome check --write --unsafe ./src",
-		"lint:staged": "biome check --error-on-warnings --no-errors-on-unmatched --staged ./src"
-	},
-	"keywords": [],
-	"author": "rafkatg",
-	"license": "ISC",
-	"dependencies": {
-		"react": "^18.3.1",
-		"react-dom": "^18.3.1"
-	},
-	"devDependencies": {
-		"@biomejs/biome": "1.9.2",
-		"@types/chrome": "^0.0.273",
-		"@types/react": "^18.3.10",
-		"@types/react-dom": "^18.3.0",
-		"copy-webpack-plugin": "^12.0.2",
-		"html-webpack-plugin": "^5.6.0",
-		"terser-webpack-plugin": "^5.3.10",
-		"ts-loader": "^9.5.1",
-		"typescript": "~5.5.0",
-		"webpack": "^5.95.0",
-		"webpack-cli": "^5.1.4",
-		"webpack-dev-server": "^5.1.0"
-	}
+  "name": "filter-url-extension",
+  "version": "0.1.0",
+  "description": "Filter URL extension",
+  "private": true,
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "build": "webpack --mode production",
+    "dev": "webpack --mode development --watch",
+    "lint": "npm run lint:biome && npm run lint:ts",
+    "lint:ts": "tsc --noEmit -p tsconfig.json",
+    "lint:biome": "biome check ./src",
+    "lint:fix": "biome check --write --unsafe ./src",
+    "lint:staged": "biome check --error-on-warnings --no-errors-on-unmatched --staged ./src"
+  },
+  "keywords": [],
+  "author": "rafkatg",
+  "license": "ISC",
+  "dependencies": {
+    "mobx": "^6.13.3",
+    "mobx-react-lite": "^4.0.7",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "1.9.2",
+    "@testing-library/jest-dom": "^6.5.0",
+    "@testing-library/react": "^16.0.1",
+    "@types/chrome": "^0.0.273",
+    "@types/jest": "^29.5.13",
+    "@types/react": "^18.3.10",
+    "@types/react-dom": "^18.3.0",
+    "copy-webpack-plugin": "^12.0.2",
+    "html-webpack-plugin": "^5.6.0",
+    "jest": "^28.0.0",
+    "jest-environment-jsdom": "^28.0.0",
+    "terser-webpack-plugin": "^5.3.10",
+    "ts-jest": "^29.2.5",
+    "ts-loader": "^9.5.1",
+    "typescript": "~5.5.0",
+    "webpack": "^5.95.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.1.0"
+  }
 }

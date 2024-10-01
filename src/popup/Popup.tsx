@@ -1,36 +1,21 @@
 import React from 'react';
-import { useEffect, useState } from 'react';
-import type { Filter, FilterResponse } from '../types';
+import { useStore, FilterResult } from '../store/index';
 
 const Popup: React.FC = () => {
-	const [urls, setUrls] = useState('');
-	const [result, setResult] = useState<Filter | null>(null);
-	const [isLoading, setIsLoading] = useState(false);
-	const [error, setError] = useState<string | null>(null);
-
-	useEffect(() => {
-		chrome?.storage?.local?.get(['filterUrls'], (result) => {
-			if (result.filterUrls) {
-				setUrls(result.filterUrls);
-			}
-		});
-	}, []);
+	const store = useStore();
 
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
-		setIsLoading(true);
-		setError(null);
-
-		chrome.storage.local.set({ filterUrls: urls });
+		store.setIsLoading(true);
 
 		chrome.runtime.sendMessage(
-			{ type: 'FETCH_FILTERS', urls },
-			(response: FilterResponse) => {
-				setIsLoading(false);
+			{ type: 'FETCH_FILTERS', urls: store.filterUrls },
+			(response: { error?: string; filters?: FilterResult }) => {
+				store.setIsLoading(false);
 				if (response.error) {
-					setError(response.error);
-				} else {
-					setResult(response.filters);
+					console.error(response.error);
+				} else if (response.filters) {
+					store.setFilterResult(response.filters);
 				}
 			},
 		);
@@ -41,23 +26,22 @@ const Popup: React.FC = () => {
 			<h1>Filter URL Extension</h1>
 			<form onSubmit={handleSubmit}>
 				<textarea
-					value={urls}
-					onChange={(e) => setUrls(e.target.value)}
+					value={store.filterUrls}
+					onChange={(e) => store.setFilterUrls(e.target.value)}
 					placeholder='Enter filter URLs, separated by commas'
 					rows={5}
 					cols={50}
 				/>
-				<button type='submit' disabled={isLoading}>
-					{isLoading ? 'Analyzing...' : 'Analyze Filters'}
+				<button type='submit' disabled={store.isLoading}>
+					{store.isLoading ? 'Analyzing...' : 'Analyze Filters'}
 				</button>
 			</form>
-			{error && <p style={{ color: 'red' }}>{error}</p>}
-			{result && (
+			{store.filterResult && (
 				<div>
 					<h2>Results:</h2>
-					<p>Total network rules: {result.totalRules}</p>
-					<p>Document rules: {result.documentRules}</p>
-					<p>Subdocument rules: {result.subdocumentRules}</p>
+					<p>Total network rules: {store.filterResult.totalRules}</p>
+					<p>Document rules: {store.filterResult.documentRules}</p>
+					<p>Subdocument rules: {store.filterResult.subdocumentRules}</p>
 				</div>
 			)}
 		</div>
