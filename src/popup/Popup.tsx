@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from "react";
-import type { FilterResponse, Filter } from "../types";
+import React from 'react';
+import { useEffect, useState } from 'react';
+import type { Filter, FilterResponse } from '../types';
 
 const Popup: React.FC = () => {
-	const [urls, setUrls] = useState("");
+	const [urls, setUrls] = useState('');
 	const [result, setResult] = useState<Filter | null>(null);
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState<string | null>(null);
 
 	useEffect(() => {
-		chrome?.storage?.local?.get(["filterUrls"], (result) => {
+		chrome?.storage?.local?.get(['filterUrls'], (result) => {
 			if (result.filterUrls) {
 				setUrls(result.filterUrls);
 			}
@@ -23,7 +24,7 @@ const Popup: React.FC = () => {
 		chrome.storage.local.set({ filterUrls: urls });
 
 		chrome.runtime.sendMessage(
-			{ type: "FETCH_FILTERS", urls },
+			{ type: 'FETCH_FILTERS', urls },
 			(response: FilterResponse) => {
 				setIsLoading(false);
 				if (response.error) {
@@ -42,15 +43,15 @@ const Popup: React.FC = () => {
 				<textarea
 					value={urls}
 					onChange={(e) => setUrls(e.target.value)}
-					placeholder="Enter filter URLs, separated by commas"
+					placeholder='Enter filter URLs, separated by commas'
 					rows={5}
 					cols={50}
 				/>
-				<button type="submit" disabled={isLoading}>
-					{isLoading ? "Analyzing..." : "Analyze Filters"}
+				<button type='submit' disabled={isLoading}>
+					{isLoading ? 'Analyzing...' : 'Analyze Filters'}
 				</button>
 			</form>
-			{error && <p style={{ color: "red" }}>{error}</p>}
+			{error && <p style={{ color: 'red' }}>{error}</p>}
 			{result && (
 				<div>
 					<h2>Results:</h2>

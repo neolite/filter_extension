@@ -1,14 +1,14 @@
 {
-  "manifest_version": 2,
-  "name": "Filter URL Extension",
-  "version": "1.0",
-  "description": "Fetch and analyze filter URLs",
-  "permissions": ["storage", "https://*/"],
-  "browser_action": {
-    "default_popup": "popup.html"
-  },
-  "background": {
-    "scripts": ["background.js"],
-    "persistent": false
-  }
+	"manifest_version": 2,
+	"name": "Filter URL Extension",
+	"version": "1.0",
+	"description": "Fetch and analyze filter URLs",
+	"permissions": ["storage", "https://*/"],
+	"browser_action": {
+		"default_popup": "popup.html"
+	},
+	"background": {
+		"scripts": ["background.js"],
+		"persistent": false
+	}
 }
