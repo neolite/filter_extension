@@ -1,5 +1,7 @@
-const path = require('node:path');
+const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -27,7 +29,18 @@ module.exports = {
       template: './public/popup.html',
       filename: 'popup.html',
       chunks: ['popup']
-    })
-  ]
+    }),
+    new CopyPlugin({
+      patterns: [
+        { from: 'public/manifest.json', to: 'manifest.json' }
+      ],
+    }),
+  ],
+  optimization: {
+    minimizer: [
+      new TerserPlugin({
+        extractComments: false,
+      }),
+    ],
+  },
 };
-
